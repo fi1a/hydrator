@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\ExtractStrategy;
+namespace Fi1a\Hydrator\ExtractStrategies;
 
 use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;

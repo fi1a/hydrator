@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\ExtractStrategy;
+namespace Fi1a\Hydrator\ExtractStrategies;
 
 /**
  * Стратегия переноса данных из объекта в массив

@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\ExtractStrategy;
+namespace Fi1a\Unit\Hydrator\ExtractStrategies;
 
-use Fi1a\Hydrator\ExtractStrategy\ExtractStrategy;
+use Fi1a\Hydrator\ExtractStrategies\ExtractPublicStrategy;
 use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture2;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Стратегия переноса данных из объекта в массив
+ * Стратегия переноса публичных свойств из объекта в массив
  */
-class ExtractStrategyTest extends TestCase
+class ExtractPublicStrategyTest extends TestCase
 {
     /**
-     * Стратегия переноса данных из объекта в массив
+     * Стратегия переноса публичных свойств из объекта в массив
      */
     public function testExtract(): void
     {
@@ -28,8 +28,8 @@ class ExtractStrategyTest extends TestCase
         ];
         $hydrateStrategy = new HydrateStrategy();
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractStrategy();
-        $this->assertEquals($data, $extractStrategy->extract($model));
+        $extractStrategy = new ExtractPublicStrategy();
+        $this->assertEquals(['property_foo' => 'string',], $extractStrategy->extract($model));
 
         $model = new Fixture2();
         $this->assertEquals([], $extractStrategy->extract($model));

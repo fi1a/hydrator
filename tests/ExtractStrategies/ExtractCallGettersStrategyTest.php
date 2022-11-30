@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\ExtractStrategy;
+namespace Fi1a\Unit\Hydrator\ExtractStrategies;
 
-use Fi1a\Hydrator\ExtractStrategy\ExtractCallGettersStrategy;
+use Fi1a\Hydrator\ExtractStrategies\ExtractCallGettersStrategy;
 use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture2;

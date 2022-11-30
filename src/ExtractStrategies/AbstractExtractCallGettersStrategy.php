@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\ExtractStrategy;
+namespace Fi1a\Hydrator\ExtractStrategies;
 
 use Closure;
+use Fi1a\Hydrator\Method;
 use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;
 
-/**
- * Стратегия переноса данных из объекта в массив
- */
-class ExtractStrategy implements ExtractStrategyInterface
+abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInterface
 {
     /**
      * @var Closure
@@ -28,20 +26,43 @@ class ExtractStrategy implements ExtractStrategyInterface
      */
     private $cache = [];
 
+    /**
+     * @var Method[][]
+     */
+    private $methods = [];
+
+    /**
+     * Возвращает класс описывающий вызываемые методы
+     *
+     * @return Method[]
+     */
+    abstract protected function getCallMethods(object $model): array;
+
+    /**
+     * Конструктор
+     */
     public function __construct()
     {
         /**
-         * @param string[] $fields
-         *
-         * @return mixed[]
+         * @param mixed[] $data
          */
-        $this->fn = static function (object $model, array $fields): array {
+        $this->fn = static function (object $model, array $fields, array $getters): array {
             $data = [];
             /**
              * @psalm-suppress MixedAssignment
              * @psalm-suppress MixedArrayOffset
              */
             foreach ($fields as $name => $key) {
+                /**
+                 * @var Method $method
+                 */
+                $method = $getters[$name];
+                if ($method->isCall()) {
+                    $data[$key] = call_user_func([$model, $method->getName()]);
+
+                    continue;
+                }
+
                 $data[$key] = $model->$name;
             }
 
@@ -66,14 +87,16 @@ class ExtractStrategy implements ExtractStrategyInterface
             return [];
         }
 
+        if (!isset($this->methods[$class])) {
+            $this->methods[$class] = $this->getCallMethods($model);
+        }
+
         if (!isset($this->cache[$class])) {
             $this->cache[$class] = Closure::bind($this->fn, null, $class);
         }
 
-        /**
-         * @psalm-suppress PossiblyInvalidFunctionCall
-         */
-        return (array) $this->cache[$class]($model, $fields);
+        /** @psalm-suppress PossiblyInvalidFunctionCall */
+        return (array) $this->cache[$class]($model, $fields, $this->methods[$class]);
     }
 
     /**

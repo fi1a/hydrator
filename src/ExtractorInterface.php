@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\Hydrator;
 
-use Fi1a\Hydrator\ExtractStrategy\ExtractStrategyInterface;
+use Fi1a\Hydrator\ExtractStrategies\ExtractStrategyInterface;
 
 /**
  * Перенос данных из объекта в массив
