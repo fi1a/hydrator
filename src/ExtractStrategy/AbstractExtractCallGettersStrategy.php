@@ -34,11 +34,9 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
     /**
      * Возвращает класс описывающий вызываемые методы
      *
-     * @param string[]  $fields
-     *
      * @return Method[]
      */
-    abstract protected function getCallMethods(array $fields, object $model): array;
+    abstract protected function getCallMethods(object $model): array;
 
     /**
      * Конструктор
@@ -75,7 +73,7 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
     /**
      * @inheritDoc
      */
-    public function extract(object $model, ?array $fields): array
+    public function extract(object $model, ?array $fields = null): array
     {
         $class = get_class($model);
         if (is_null($fields)) {
@@ -90,7 +88,7 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
         }
 
         if (!isset($this->methods[$class])) {
-            $this->methods[$class] = $this->getCallMethods($fields, $model);
+            $this->methods[$class] = $this->getCallMethods($model);
         }
 
         if (!isset($this->cache[$class])) {

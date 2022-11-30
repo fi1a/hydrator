@@ -52,7 +52,7 @@ class ExtractStrategy implements ExtractStrategyInterface
     /**
      * @inheritDoc
      */
-    public function extract(object $model, ?array $fields): array
+    public function extract(object $model, ?array $fields = null): array
     {
         $class = get_class($model);
         if (is_null($fields)) {

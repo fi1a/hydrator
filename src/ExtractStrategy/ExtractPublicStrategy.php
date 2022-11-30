@@ -10,7 +10,7 @@ use ReflectionClass;
 /**
  * Стратегия переноса публичных свойств из объекта в массив
  */
-class PublicExtractStrategy extends ExtractStrategy
+class ExtractPublicStrategy extends ExtractStrategy
 {
     /**
      * @inheritDoc

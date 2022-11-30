@@ -27,7 +27,7 @@ class HydrateCallSettersStrategyTest extends TestCase
         $strategy = new HydrateCallSettersStrategy();
         $strategy->hydrate($data, $model);
         $this->assertEquals('string_setter', $model->foo);
-        $this->assertEquals(2, $model->bar);
-        $this->assertEquals(false, $model->baz);
+        $this->assertEquals(2, $model->getBar());
+        $this->assertEquals(false, $model->getBaz());
     }
 }

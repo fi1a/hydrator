@@ -17,12 +17,12 @@ class Fixture1
     /**
      * @var int
      */
-    public $bar;
+    protected $bar;
 
     /**
      * @var bool
      */
-    public $baz;
+    private $baz;
 
     /**
      * Сеттер
@@ -41,10 +41,26 @@ class Fixture1
     }
 
     /**
+     * Геттер
+     */
+    public function getBar(): int
+    {
+        return $this->bar;
+    }
+
+    /**
      * Сеттер
      */
     private function setBaz(bool $baz): void
     {
         $this->baz = !$baz;
+    }
+
+    /**
+     * Геттер
+     */
+    public function getBaz(): bool
+    {
+        return $this->baz;
     }
 }

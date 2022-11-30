@@ -9,9 +9,9 @@ use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;
 
 /**
- * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
+ * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров и публичных свойств
  */
-class ExtractPublicCallGettersStrategy extends AbstractExtractCallGettersStrategy
+class ExtractPublicCallGettersPublicStrategy extends AbstractExtractCallGettersStrategy
 {
     /**
      * @inheritDoc
@@ -32,5 +32,22 @@ class ExtractPublicCallGettersStrategy extends AbstractExtractCallGettersStrateg
         }
 
         return $methods;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getExtractFields(object $model): array
+    {
+        $fields = [];
+        $reflection = new ReflectionClass($model);
+        foreach ($reflection->getProperties() as $property) {
+            if (!$property->isPublic()) {
+                continue;
+            }
+            $fields[$property->getName()] = NameHelper::humanize($property->getName());
+        }
+
+        return $fields;
     }
 }

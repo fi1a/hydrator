@@ -26,8 +26,8 @@ class HydratorTest extends TestCase
         ];
         $model = $hydrator->hydrate($data, Fixture1::class);
         $this->assertEquals('string', $model->foo);
-        $this->assertEquals(1, $model->bar);
-        $this->assertEquals(true, $model->baz);
+        $this->assertEquals(1, $model->getBar());
+        $this->assertEquals(true, $model->getBaz());
     }
 
     /**
@@ -44,7 +44,7 @@ class HydratorTest extends TestCase
         ];
         $hydrator->hydrateModel($data, $model);
         $this->assertEquals('string', $model->foo);
-        $this->assertEquals(1, $model->bar);
-        $this->assertEquals(true, $model->baz);
+        $this->assertEquals(1, $model->getBar());
+        $this->assertEquals(true, $model->getBaz());
     }
 }

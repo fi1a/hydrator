@@ -27,7 +27,7 @@ class HydrateStrategyTest extends TestCase
         $strategy = new HydrateStrategy();
         $strategy->hydrate($data, $model);
         $this->assertEquals('string', $model->foo);
-        $this->assertEquals(1, $model->bar);
-        $this->assertEquals(true, $model->baz);
+        $this->assertEquals(1, $model->getBar());
+        $this->assertEquals(true, $model->getBaz());
     }
 }
