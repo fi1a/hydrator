@@ -10,7 +10,7 @@ use Fi1a\Hydrator\Method;
 /**
  * Абстрактная стратегия для переноса данных из массива в объект с вызовом сеттеров
  */
-abstract class AbstractCallSettersStrategy implements HydrateStrategyInterface
+abstract class AbstractHydrateCallSettersStrategy implements HydrateStrategyInterface
 {
     /**
      * @var Closure
@@ -79,15 +79,5 @@ abstract class AbstractCallSettersStrategy implements HydrateStrategyInterface
         }
         /** @psalm-suppress PossiblyInvalidFunctionCall */
         $this->cache[$class]($data, $model, $this->methods[$class]);
-    }
-
-    /**
-     * Преобразует строку из ("string_helper" или "string.helper" или "string-helper") в "StringHelper"
-     */
-    protected function classify(string $value, string $delimiter = ''): string
-    {
-        return trim(preg_replace_callback('/(^|_|\.|\-|\/)([a-z ]+)/im', function ($matches) use ($delimiter) {
-            return ucfirst(mb_strtolower($matches[2])) . $delimiter;
-        }, $value . ' '), ' ' . $delimiter);
     }
 }
