@@ -38,4 +38,14 @@ class NameHelper
 
         return str_replace($search, $delimiter, $result);
     }
+
+    /**
+     * Преобразует строку из ("string_helper" или "string.helper" или "string-helper") в "stringHelper"
+     *
+     * @param string $value значение для преобразования
+     */
+    public static function camelize(string $value, string $delimiter = ''): string
+    {
+        return lcfirst(static::classify($value, $delimiter));
+    }
 }

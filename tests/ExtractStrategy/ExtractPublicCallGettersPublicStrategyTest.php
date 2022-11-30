@@ -22,14 +22,14 @@ class ExtractPublicCallGettersPublicStrategyTest extends TestCase
     {
         $model = new Fixture1();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
         $hydrateStrategy = new HydrateStrategy();
         $hydrateStrategy->hydrate($data, $model);
         $extractStrategy = new ExtractPublicCallGettersPublicStrategy();
-        $this->assertEquals(['foo' => 'string',], $extractStrategy->extract($model));
+        $this->assertEquals(['property_foo' => 'string',], $extractStrategy->extract($model));
 
         $model = new Fixture2();
         $this->assertEquals([], $extractStrategy->extract($model));

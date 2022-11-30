@@ -12,55 +12,55 @@ class Fixture1
     /**
      * @var string
      */
-    public $foo;
+    public $propertyFoo;
 
     /**
      * @var int
      */
-    protected $bar;
+    protected $propertyBar;
 
     /**
      * @var bool
      */
-    private $baz;
+    private $propertyBaz;
 
     /**
      * Сеттер
      */
-    public function setFoo(string $foo): void
+    public function setPropertyFoo(string $propertyFoo): void
     {
-        $this->foo = $foo . '_setter';
+        $this->propertyFoo = $propertyFoo . '_setter';
     }
 
     /**
      * Сеттер
      */
-    protected function setBar(int $bar): void
+    protected function setPropertyBar(int $propertyBar): void
     {
-        $this->bar = $bar + 1;
+        $this->propertyBar = $propertyBar + 1;
     }
 
     /**
      * Геттер
      */
-    public function getBar(): int
+    public function getPropertyBar(): int
     {
-        return $this->bar;
+        return $this->propertyBar;
     }
 
     /**
      * Сеттер
      */
-    private function setBaz(bool $baz): void
+    private function setPropertyBaz(bool $propertyBaz): void
     {
-        $this->baz = !$baz;
+        $this->propertyBaz = !$propertyBaz;
     }
 
     /**
      * Геттер
      */
-    public function getBaz(): bool
+    public function getPropertyBaz(): bool
     {
-        return $this->baz;
+        return $this->propertyBaz;
     }
 }

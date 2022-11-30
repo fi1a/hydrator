@@ -6,6 +6,7 @@ namespace Fi1a\Hydrator\HydrateStrategies;
 
 use Closure;
 use Fi1a\Hydrator\Method;
+use Fi1a\Hydrator\NameHelper;
 
 /**
  * Абстрактная стратегия для переноса данных из массива в объект с вызовом сеттеров
@@ -59,8 +60,8 @@ abstract class AbstractHydrateCallSettersStrategy implements HydrateStrategyInte
 
                     continue;
                 }
-
-                $model->$name = $value;
+                $property = NameHelper::camelize((string) $name);
+                $model->$property = $value;
             }
         };
     }

@@ -20,14 +20,14 @@ class HydrateStrategyTest extends TestCase
     {
         $model = new Fixture1();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
         $strategy = new HydrateStrategy();
         $strategy->hydrate($data, $model);
-        $this->assertEquals('string', $model->foo);
-        $this->assertEquals(1, $model->getBar());
-        $this->assertEquals(true, $model->getBaz());
+        $this->assertEquals('string', $model->propertyFoo);
+        $this->assertEquals(1, $model->getPropertyBar());
+        $this->assertEquals(true, $model->getPropertyBaz());
     }
 }

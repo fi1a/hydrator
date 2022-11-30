@@ -20,14 +20,14 @@ class HydrateCallSettersStrategyTest extends TestCase
     {
         $model = new Fixture1();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
         $strategy = new HydrateCallSettersStrategy();
         $strategy->hydrate($data, $model);
-        $this->assertEquals('string_setter', $model->foo);
-        $this->assertEquals(2, $model->getBar());
-        $this->assertEquals(false, $model->getBaz());
+        $this->assertEquals('string_setter', $model->propertyFoo);
+        $this->assertEquals(2, $model->getPropertyBar());
+        $this->assertEquals(false, $model->getPropertyBaz());
     }
 }

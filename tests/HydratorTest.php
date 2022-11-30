@@ -20,14 +20,17 @@ class HydratorTest extends TestCase
     {
         $hydrator = new Hydrator();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
+        /**
+         * @var Fixture1 $model
+         */
         $model = $hydrator->hydrate($data, Fixture1::class);
-        $this->assertEquals('string', $model->foo);
-        $this->assertEquals(1, $model->getBar());
-        $this->assertEquals(true, $model->getBaz());
+        $this->assertEquals('string', $model->propertyFoo);
+        $this->assertEquals(1, $model->getPropertyBar());
+        $this->assertEquals(true, $model->getPropertyBaz());
     }
 
     /**
@@ -38,13 +41,13 @@ class HydratorTest extends TestCase
         $hydrator = new Hydrator();
         $model = new Fixture1();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
         $hydrator->hydrateModel($data, $model);
-        $this->assertEquals('string', $model->foo);
-        $this->assertEquals(1, $model->getBar());
-        $this->assertEquals(true, $model->getBaz());
+        $this->assertEquals('string', $model->propertyFoo);
+        $this->assertEquals(1, $model->getPropertyBar());
+        $this->assertEquals(true, $model->getPropertyBaz());
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\HydrateStrategies;
 
 use Closure;
+use Fi1a\Hydrator\NameHelper;
 
 /**
  * Стратегия для переноса данных из массива в объект
@@ -34,7 +35,8 @@ class HydrateStrategy implements HydrateStrategyInterface
              * @var mixed $value
              */
             foreach ($data as $name => $value) {
-                $model->$name = $value;
+                $property = NameHelper::camelize((string) $name);
+                $model->$property = $value;
             }
         };
     }

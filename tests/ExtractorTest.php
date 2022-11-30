@@ -21,9 +21,9 @@ class ExtractorTest extends TestCase
     {
         $hydrator = new Hydrator();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
         $model = $hydrator->hydrate($data, Fixture1::class);
         $extractor = new Extractor();

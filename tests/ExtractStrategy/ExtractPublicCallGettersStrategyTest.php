@@ -22,9 +22,9 @@ class ExtractPublicCallGettersStrategyTest extends TestCase
     {
         $model = new Fixture1();
         $data = [
-            'foo' => 'string',
-            'bar' => 1,
-            'baz' => true,
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
         ];
         $hydrateStrategy = new HydrateStrategy();
         $hydrateStrategy->hydrate($data, $model);
