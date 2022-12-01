@@ -29,4 +29,20 @@ class ExtractorTest extends TestCase
         $extractor = new Extractor();
         $this->assertEquals($data, $extractor->extract($model));
     }
+
+    /**
+     * Перенос данных из объекта в массив
+     */
+    public function testExtractKeys(): void
+    {
+        $hydrator = new Hydrator();
+        $data = [
+            'property_foo' => 'string',
+            'property_bar' => 1,
+            'property_baz' => true,
+        ];
+        $model = $hydrator->hydrate($data, Fixture1::class);
+        $extractor = new Extractor();
+        $this->assertEquals(['property_bar' => 1,], $extractor->extract($model, ['property_bar']));
+    }
 }

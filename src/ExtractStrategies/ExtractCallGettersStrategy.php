@@ -16,13 +16,19 @@ class ExtractCallGettersStrategy extends AbstractExtractCallGettersStrategy
     /**
      * @inheritDoc
      */
-    protected function getCallMethods(object $model): array
+    protected function getCallMethods(object $model, ?array $fields = null): array
     {
         $methods = [];
         $reflection = new ReflectionClass($model);
 
-        foreach ($reflection->getProperties() as $property) {
-            $name = $property->getName();
+        if (is_null($fields)) {
+            $fields = [];
+            foreach ($reflection->getProperties() as $property) {
+                $fields[] = $property->getName();
+            }
+        }
+
+        foreach ($fields as $name) {
             $methodName = 'get' . NameHelper::classify($name);
             $method = new Method($methodName, $reflection->hasMethod($methodName));
 

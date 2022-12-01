@@ -34,9 +34,11 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
     /**
      * Возвращает класс описывающий вызываемые методы
      *
+     * @param string[]|null $fields
+     *
      * @return Method[]
      */
-    abstract protected function getCallMethods(object $model): array;
+    abstract protected function getCallMethods(object $model, ?array $fields): array;
 
     /**
      * Конструктор
@@ -53,14 +55,16 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
              * @psalm-suppress MixedArrayOffset
              */
             foreach ($fields as $name => $key) {
-                /**
-                 * @var Method $method
-                 */
-                $method = $getters[$name];
-                if ($method->isCall()) {
-                    $data[$key] = call_user_func([$model, $method->getName()]);
+                if (isset($getters[$name])) {
+                    /**
+                     * @var Method $method
+                     */
+                    $method = $getters[$name];
+                    if ($method->isCall()) {
+                        $data[$key] = call_user_func([$model, $method->getName()]);
 
-                    continue;
+                        continue;
+                    }
                 }
 
                 $data[$key] = $model->$name;
@@ -76,19 +80,31 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
     public function extract(object $model, ?array $fields = null): array
     {
         $class = get_class($model);
+
+        if (!isset($this->methods[$class])) {
+            $this->methods[$class] = $this->getCallMethods($model, $fields);
+        }
+
         if (is_null($fields)) {
             if (!isset($this->cacheFields[$class])) {
-                $this->cacheFields[$class] = $this->getExtractFields($model);
+                $fields = $this->getExtractFields($model);
+                /**
+                 * @var string $name
+                 */
+                foreach ($this->methods[$class] as $name => $method) {
+                    if (isset($fields[$name]) || !$method->isCall()) {
+                        continue;
+                    }
+
+                    $fields[$name] = NameHelper::humanize($name);
+                }
+                $this->cacheFields[$class] = $fields;
             }
             $fields = $this->cacheFields[$class];
         }
 
         if (!count($fields)) {
             return [];
-        }
-
-        if (!isset($this->methods[$class])) {
-            $this->methods[$class] = $this->getCallMethods($model);
         }
 
         if (!isset($this->cache[$class])) {

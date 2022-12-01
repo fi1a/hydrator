@@ -19,9 +19,9 @@ interface ExtractorInterface
     /**
      * Перенос данных из объекта в массив
      *
-     * @param string[]|null $fields
+     * @param string[]|null $keys
      *
      * @return mixed[]
      */
-    public function extract(object $model, ?array $fields = null): array;
+    public function extract(object $model, ?array $keys = null): array;
 }
