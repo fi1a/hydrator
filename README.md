@@ -18,7 +18,7 @@
 Установить этот пакет можно как зависимость, используя Composer.
 
 ``` bash
-composer require fi1a/hydrator ~1.0
+composer require fi1a/hydrator
 ```
 
 ## Hydrator. Перенос данных из массива в объект
