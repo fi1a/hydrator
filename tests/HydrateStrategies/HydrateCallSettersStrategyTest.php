@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\Unit\Hydrator\HydrateStrategies;
 
 use Fi1a\Hydrator\HydrateStrategies\HydrateCallSettersStrategy;
+use Fi1a\Hydrator\KeyName\Humanize;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use PHPUnit\Framework\TestCase;
 
@@ -20,11 +21,29 @@ class HydrateCallSettersStrategyTest extends TestCase
     {
         $model = new Fixture1();
         $data = [
+            'propertyFoo' => 'string',
+            'propertyBar' => 1,
+            'propertyBaz' => true,
+        ];
+        $strategy = new HydrateCallSettersStrategy();
+        $strategy->hydrate($data, $model);
+        $this->assertEquals('string_setter', $model->propertyFoo);
+        $this->assertEquals(2, $model->getPropertyBar());
+        $this->assertEquals(false, $model->getPropertyBaz());
+    }
+
+    /**
+     * Стратегия для переноса данных из массива в объект с вызовом сеттеров
+     */
+    public function testHydrateHumanize(): void
+    {
+        $model = new Fixture1();
+        $data = [
             'property_foo' => 'string',
             'property_bar' => 1,
             'property_baz' => true,
         ];
-        $strategy = new HydrateCallSettersStrategy();
+        $strategy = new HydrateCallSettersStrategy(new Humanize());
         $strategy->hydrate($data, $model);
         $this->assertEquals('string_setter', $model->propertyFoo);
         $this->assertEquals(2, $model->getPropertyBar());

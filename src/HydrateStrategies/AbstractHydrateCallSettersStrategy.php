@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\HydrateStrategies;
 
 use Closure;
+use Fi1a\Hydrator\KeyName\Camelize;
+use Fi1a\Hydrator\KeyName\KeyNameInterface;
 use Fi1a\Hydrator\Method;
-use Fi1a\Hydrator\NameHelper;
 
 /**
  * Абстрактная стратегия для переноса данных из массива в объект с вызовом сеттеров
@@ -40,13 +41,17 @@ abstract class AbstractHydrateCallSettersStrategy implements HydrateStrategyInte
     /**
      * Конструктор
      */
-    public function __construct()
+    public function __construct(?KeyNameInterface $keyName = null)
     {
+        if (is_null($keyName)) {
+            $keyName = new Camelize();
+        }
+
         /**
          * @param mixed[]  $data
          * @param Method[]  $setters
          */
-        $this->fn = static function (array $data, object $model, array $setters): void {
+        $this->fn = static function (array $data, object $model, array $setters) use ($keyName): void {
             /**
              * @var mixed $value
              */
@@ -60,7 +65,7 @@ abstract class AbstractHydrateCallSettersStrategy implements HydrateStrategyInte
 
                     continue;
                 }
-                $property = NameHelper::camelize((string) $name);
+                $property = $keyName->getPropertyName((string) $name);
                 $model->$property = $value;
             }
         };
