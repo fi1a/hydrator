@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\ExtractStrategies;
 
 use Fi1a\Hydrator\Method;
-use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;
 
 /**
@@ -29,7 +28,7 @@ class ExtractCallGettersStrategy extends AbstractExtractCallGettersStrategy
         }
 
         foreach ($fields as $name) {
-            $methodName = 'get' . NameHelper::classify($name);
+            $methodName = 'get' . $this->keyName->getMethodName($name);
             $method = new Method($methodName, $reflection->hasMethod($methodName));
 
             $methods[$name] = $method;

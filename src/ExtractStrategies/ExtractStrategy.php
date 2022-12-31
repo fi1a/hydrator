@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\ExtractStrategies;
 
 use Closure;
-use Fi1a\Hydrator\NameHelper;
+use Fi1a\Hydrator\KeyName\Camelize;
+use Fi1a\Hydrator\KeyName\KeyNameInterface;
 use ReflectionClass;
 
 /**
@@ -28,8 +29,17 @@ class ExtractStrategy implements ExtractStrategyInterface
      */
     private $cache = [];
 
-    public function __construct()
+    /**
+     * @var KeyNameInterface
+     */
+    protected $keyName;
+
+    public function __construct(?KeyNameInterface $keyName = null)
     {
+        if (is_null($keyName)) {
+            $keyName = new Camelize();
+        }
+        $this->keyName = $keyName;
         /**
          * @param string[] $fields
          *
@@ -86,7 +96,7 @@ class ExtractStrategy implements ExtractStrategyInterface
         $fields = [];
         $reflection = new ReflectionClass($model);
         foreach ($reflection->getProperties() as $property) {
-            $fields[$property->getName()] = NameHelper::humanize($property->getName());
+            $fields[$property->getName()] = $this->keyName->getArrayKeyName($property->getName());
         }
 
         return $fields;

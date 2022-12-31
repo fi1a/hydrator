@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\ExtractStrategies;
 
 use Closure;
+use Fi1a\Hydrator\KeyName\Camelize;
+use Fi1a\Hydrator\KeyName\KeyNameInterface;
 use Fi1a\Hydrator\Method;
-use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;
 
 abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInterface
@@ -32,6 +33,11 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
     private $methods = [];
 
     /**
+     * @var KeyNameInterface
+     */
+    protected $keyName;
+
+    /**
      * Возвращает класс описывающий вызываемые методы
      *
      * @param string[]|null $fields
@@ -43,8 +49,12 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
     /**
      * Конструктор
      */
-    public function __construct()
+    public function __construct(?KeyNameInterface $keyName = null)
     {
+        if (is_null($keyName)) {
+            $keyName = new Camelize();
+        }
+        $this->keyName = $keyName;
         /**
          * @param mixed[] $data
          */
@@ -96,7 +106,7 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
                         continue;
                     }
 
-                    $fields[$name] = NameHelper::humanize($name);
+                    $fields[$name] = $this->keyName->getArrayKeyName($name);
                 }
                 $this->cacheFields[$class] = $fields;
             }
@@ -125,7 +135,7 @@ abstract class AbstractExtractCallGettersStrategy implements ExtractStrategyInte
         $fields = [];
         $reflection = new ReflectionClass($model);
         foreach ($reflection->getProperties() as $property) {
-            $fields[$property->getName()] = NameHelper::humanize($property->getName());
+            $fields[$property->getName()] = $this->keyName->getArrayKeyName($property->getName());
         }
 
         return $fields;

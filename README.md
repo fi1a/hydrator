@@ -52,9 +52,9 @@ $hydrator = new Hydrator();
  * @var Foo $model
  */
 $model = $hydrator->hydrate([
-    'property_bar' => 'value',
-    'property_baz' => 1,
-    'property_qux' => true,
+    'propertyBar' => 'value',
+    'propertyBaz' => 1,
+    'propertyQux' => true,
 ], Foo::class);
 
 $model->propertyBar; // 'value'
@@ -89,9 +89,9 @@ $hydrator = new Hydrator();
 $model = new Foo();
 
 $hydrator->hydrateModel([
-    'property_bar' => 'value',
-    'property_baz' => 1,
-    'property_qux' => true,
+    'propertyBar' => 'value',
+    'propertyBaz' => 1,
+    'propertyQux' => true,
 ], $model);
 
 $model->propertyBar; // 'value'
@@ -127,9 +127,9 @@ $hydrator = new Hydrator();
  * @var Foo $model
  */
 $model = $hydrator->hydrate([
-    'property_bar' => 'value',
-    'property_baz' => 1,
-    'property_qux' => true,
+    'propertyBar' => 'value',
+    'propertyBaz' => 1,
+    'propertyQux' => true,
 ], Foo::class);
 
 $model->propertyBar; // 'value'
@@ -168,9 +168,9 @@ $hydrator = new Hydrator(new HydrateCallSettersStrategy());
  * @var Foo $model
  */
 $model = $hydrator->hydrate([
-    'property_bar' => 'value',
-    'property_baz' => 1,
-    'property_qux' => true,
+    'propertyBar' => 'value',
+    'propertyBaz' => 1,
+    'propertyQux' => true,
 ], Foo::class);
 
 $model->getPropertyBaz(); // 2
@@ -209,9 +209,9 @@ $hydrator = new Hydrator(new HydratePublicCallSettersStrategy());
  * @var Foo $model
  */
 $model = $hydrator->hydrate([
-    'property_bar' => 'value',
-    'property_baz' => 1,
-    'property_qux' => true,
+    'propertyBar' => 'value',
+    'propertyBaz' => 1,
+    'propertyQux' => true,
 ], Foo::class);
 
 $model->getPropertyBaz(); // 3
@@ -246,7 +246,7 @@ $model = new Foo();
 
 $hydrator = new Extractor();
 
-$data = $hydrator->extract($model); // ['property_bar' => 'value',]
+$data = $hydrator->extract($model); // ['propertyBar' => 'value',]
 ```
 
 Можно указать какие свойства нужно извлечь с помощью аргумента `$keys` метода `Fi1a\Hydrator\Extractor::extract`:
@@ -275,7 +275,7 @@ $model = new Foo();
 
 $hydrator = new Extractor();
 
-$data = $hydrator->extract($model, ['property_bar', 'property_baz']); // ['property_bar' => 'value', 'property_baz' => 1,]
+$data = $hydrator->extract($model, ['propertyBar', 'propertyBaz']); // ['propertyBar' => 'value', 'propertyBaz' => 1,]
 ```
 
 ### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractPublicCallGettersStrategy
@@ -314,7 +314,7 @@ $model = new Foo();
 
 $hydrator = new Extractor(new ExtractPublicCallGettersStrategy());
 
-$data = $hydrator->extract($model); // ['property_bar' => 'value', 'property_baz' => 1,]
+$data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' => 1,]
 ```
 
 ### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractCallGettersStrategy
@@ -353,7 +353,7 @@ $model = new Foo();
 
 $hydrator = new Extractor(new ExtractCallGettersStrategy());
 
-$data = $hydrator->extract($model); // ['property_bar' => 'value', 'property_baz' => 1, 'property_qux' => true]
+$data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' => 1, 'propertyQux' => true]
 ```
 
 ### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractPublicStrategy
@@ -392,7 +392,7 @@ $model = new Foo();
 
 $hydrator = new Extractor(new ExtractPublicStrategy());
 
-$data = $hydrator->extract($model); // ['property_bar' => 'value',]
+$data = $hydrator->extract($model); // ['propertyBar' => 'value',]
 ```
 
 ### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractStrategy
@@ -430,6 +430,88 @@ class Foo {
 $model = new Foo();
 
 $hydrator = new Extractor(new ExtractStrategy());
+
+$data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' => 1, 'propertyQux' => true]
+```
+
+## Наименование ключей массива
+
+Для определения наименования ключей массива используются классы реализующие интерфейс `Fi1a\Hydrator\KeyName\KeyNameInterface`.
+Объект данного класса передается в конструктор переноса данных из массива в объект и обратно.
+
+- `Fi1a\Hydrator\KeyName\Camelize` преобразует в "stringHelper" название ключей массива;
+- `Fi1a\Hydrator\KeyName\Humanize` преобразует в "string_helper" название ключей массива;
+
+По умолчанию используется "stringHelper" название ключей массива (`Fi1a\Hydrator\KeyName\Camelize`).
+
+Пример переноса данных из массива в объект с наименованием ключей массива "string_helper":
+
+```php
+use Fi1a\Hydrator\Hydrator;
+use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
+use Fi1a\Hydrator\KeyName\Humanize;
+
+class Foo {
+    /**
+     * @var string
+     */
+    public $propertyBar;
+
+    /**
+     * @var int
+     */
+    protected $propertyBaz;
+
+    /**
+     * @var bool
+     */
+    private $propertyQux;
+}
+
+$hydrator = new Hydrator(new HydrateStrategy(new Humanize()));
+
+$model = new Foo();
+
+$hydrator->hydrateModel([
+    'property_bar' => 'value',
+    'property_baz' => 1,
+    'property_qux' => true,
+], $model);
+
+$model->propertyBar; // 'value'
+```
+Пример переноса данных из объекта в массив с наименованием ключей массива "string_helper":
+
+```php
+use Fi1a\Hydrator\Extractor;
+use Fi1a\Hydrator\ExtractStrategies\ExtractStrategy;
+use Fi1a\Hydrator\KeyName\Humanize;
+
+class Foo {
+    /**
+     * @var string
+     */
+    public $propertyBar = 'value';
+
+    /**
+     * @var int
+     */
+    protected $propertyBaz = 1;
+
+    /**
+     * @var bool
+     */
+    private $propertyQux = true;
+
+    public function getPropertyBaz(): int
+    {
+        return $this->propertyBaz;
+    }
+}
+
+$model = new Foo();
+
+$hydrator = new Extractor(new ExtractStrategy(new Humanize()));
 
 $data = $hydrator->extract($model); // ['property_bar' => 'value', 'property_baz' => 1, 'property_qux' => true]
 ```

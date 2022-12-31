@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Fi1a\Hydrator\ExtractStrategies;
 
-use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;
 
 /**
@@ -23,7 +22,7 @@ class ExtractPublicStrategy extends ExtractStrategy
             if (!$property->isPublic()) {
                 continue;
             }
-            $fields[$property->getName()] = NameHelper::humanize($property->getName());
+            $fields[$property->getName()] = $this->keyName->getArrayKeyName($property->getName());
         }
 
         return $fields;

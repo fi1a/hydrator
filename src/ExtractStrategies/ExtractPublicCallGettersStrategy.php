@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\ExtractStrategies;
 
 use Fi1a\Hydrator\Method;
-use Fi1a\Hydrator\NameHelper;
 use ReflectionClass;
 
 /**
@@ -29,7 +28,7 @@ class ExtractPublicCallGettersStrategy extends AbstractExtractCallGettersStrateg
         }
 
         foreach ($fields as $name) {
-            $methodName = 'get' . NameHelper::classify($name);
+            $methodName = 'get' . $this->keyName->getMethodName($name);
             $method = new Method(
                 $methodName,
                 $reflection->hasMethod($methodName) && $reflection->getMethod($methodName)->isPublic()
@@ -52,7 +51,7 @@ class ExtractPublicCallGettersStrategy extends AbstractExtractCallGettersStrateg
             if (!$property->isPublic()) {
                 continue;
             }
-            $fields[$property->getName()] = NameHelper::humanize($property->getName());
+            $fields[$property->getName()] = $this->keyName->getArrayKeyName($property->getName());
         }
 
         return $fields;

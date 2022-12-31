@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Fi1a\Hydrator\HydrateStrategies;
 
 use Closure;
-use Fi1a\Hydrator\NameHelper;
+use Fi1a\Hydrator\KeyName\Camelize;
+use Fi1a\Hydrator\KeyName\KeyNameInterface;
 
 /**
  * Стратегия для переноса данных из массива в объект
@@ -25,17 +26,20 @@ class HydrateStrategy implements HydrateStrategyInterface
     /**
      * Конструктор
      */
-    public function __construct()
+    public function __construct(?KeyNameInterface $keyName = null)
     {
+        if (is_null($keyName)) {
+            $keyName = new Camelize();
+        }
         /**
          * @param mixed[] $data
          */
-        $this->fn = static function (array $data, object $model): void {
+        $this->fn = static function (array $data, object $model) use ($keyName): void {
             /**
              * @var mixed $value
              */
             foreach ($data as $name => $value) {
-                $property = NameHelper::camelize((string) $name);
+                $property = $keyName->getPropertyName((string) $name);
                 $model->$property = $value;
             }
         };
