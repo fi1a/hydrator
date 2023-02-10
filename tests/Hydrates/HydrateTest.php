@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\HydrateStrategies;
+namespace Fi1a\Unit\Hydrator\Hydrates;
 
-use Fi1a\Hydrator\HydrateStrategies\HydratePublicCallSettersStrategy;
+use Fi1a\Hydrator\Hydrates\Hydrate;
 use Fi1a\Hydrator\KeyName\Humanize;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Стратегия для переноса данных из массива в объект с вызовом только публичных сеттеров
+ * Стратегия для переноса данных из массива в объект
  */
-class HydratePublicCallSettersStrategyTest extends TestCase
+class HydrateTest extends TestCase
 {
     /**
-     * Стратегия для переноса данных из массива в объект с вызовом только публичных сеттеров
+     * Стратегия переноса данных из массива в объект
      */
     public function testHydrate(): void
     {
@@ -25,15 +25,15 @@ class HydratePublicCallSettersStrategyTest extends TestCase
             'propertyBar' => 1,
             'propertyBaz' => true,
         ];
-        $strategy = new HydratePublicCallSettersStrategy();
+        $strategy = new Hydrate();
         $strategy->hydrate($data, $model);
-        $this->assertEquals('string_setter', $model->propertyFoo);
+        $this->assertEquals('string', $model->propertyFoo);
         $this->assertEquals(1, $model->getPropertyBar());
         $this->assertEquals(true, $model->getPropertyBaz());
     }
 
     /**
-     * Стратегия для переноса данных из массива в объект с вызовом только публичных сеттеров
+     * Стратегия переноса данных из массива в объект
      */
     public function testHydrateHumanize(): void
     {
@@ -43,9 +43,9 @@ class HydratePublicCallSettersStrategyTest extends TestCase
             'property_bar' => 1,
             'property_baz' => true,
         ];
-        $strategy = new HydratePublicCallSettersStrategy(new Humanize());
+        $strategy = new Hydrate(new Humanize());
         $strategy->hydrate($data, $model);
-        $this->assertEquals('string_setter', $model->propertyFoo);
+        $this->assertEquals('string', $model->propertyFoo);
         $this->assertEquals(1, $model->getPropertyBar());
         $this->assertEquals(true, $model->getPropertyBaz());
     }

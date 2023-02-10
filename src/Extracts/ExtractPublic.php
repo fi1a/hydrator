@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\ExtractStrategies;
+namespace Fi1a\Hydrator\Extracts;
 
 use ReflectionClass;
 
 /**
  * Стратегия переноса публичных свойств из объекта в массив
  */
-class ExtractPublicStrategy extends ExtractStrategy
+class ExtractPublic extends Extract
 {
     /**
      * @inheritDoc

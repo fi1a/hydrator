@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\HydrateStrategies;
+namespace Fi1a\Hydrator\Hydrates;
 
 use Fi1a\Hydrator\Method;
 use Fi1a\Hydrator\NameHelper;
@@ -11,7 +11,7 @@ use ReflectionClass;
 /**
  * Стратегия для переноса данных из массива в объект с вызовом только публичных сеттеров
  */
-class HydratePublicCallSettersStrategy extends AbstractHydrateCallSettersStrategy
+class HydratePublicCallSetters extends AbstractHydrateCallSetters
 {
     /**
      * @inheritDoc

@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+class_alias(
+    'Fi1a\Hydrator\Extracts\AbstractExtractCallGetters',
+    'Fi1a\Hydrator\ExtractStrategies\AbstractExtractCallGettersStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Extracts\ExtractCallGetters',
+    'Fi1a\Hydrator\ExtractStrategies\ExtractCallGettersStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Extracts\ExtractPublicCallGetters',
+    'Fi1a\Hydrator\ExtractStrategies\ExtractPublicCallGettersStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Extracts\ExtractPublic',
+    'Fi1a\Hydrator\ExtractStrategies\ExtractPublicStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Extracts\Extract',
+    'Fi1a\Hydrator\ExtractStrategies\ExtractStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Extracts\ExtractInterface',
+    'Fi1a\Hydrator\ExtractStrategies\ExtractStrategyInterface'
+);
+class_alias(
+    'Fi1a\Hydrator\Hydrates\AbstractHydrateCallSetters',
+    'Fi1a\Hydrator\HydrateStrategies\AbstractHydrateCallSettersStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Hydrates\HydrateCallSetters',
+    'Fi1a\Hydrator\HydrateStrategies\HydrateCallSettersStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Hydrates\HydratePublicCallSetters',
+    'Fi1a\Hydrator\HydrateStrategies\HydratePublicCallSettersStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Hydrates\Hydrate',
+    'Fi1a\Hydrator\HydrateStrategies\HydrateStrategy'
+);
+class_alias(
+    'Fi1a\Hydrator\Hydrates\HydrateInterface',
+    'Fi1a\Hydrator\HydrateStrategies\HydrateStrategyInterface'
+);

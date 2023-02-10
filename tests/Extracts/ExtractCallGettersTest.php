@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\ExtractStrategies;
+namespace Fi1a\Unit\Hydrator\Extracts;
 
-use Fi1a\Hydrator\ExtractStrategies\ExtractPublicCallGettersStrategy;
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
+use Fi1a\Hydrator\Extracts\ExtractCallGetters;
+use Fi1a\Hydrator\Hydrates\Hydrate;
 use Fi1a\Hydrator\KeyName\Humanize;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture2;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
+ * Стратегия переноса данных из объекта в массив с вызовом геттеров
  */
-class ExtractPublicCallGettersStrategyTest extends TestCase
+class ExtractCallGettersTest extends TestCase
 {
     /**
-     * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
+     * Стратегия переноса данных из объекта в массив с вызовом геттеров
      */
     public function testExtract(): void
     {
@@ -27,9 +27,9 @@ class ExtractPublicCallGettersStrategyTest extends TestCase
             'propertyBar' => 1,
             'propertyBaz' => true,
         ];
-        $hydrateStrategy = new HydrateStrategy();
+        $hydrateStrategy = new Hydrate();
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractPublicCallGettersStrategy();
+        $extractStrategy = new ExtractCallGetters();
         $this->assertEquals($data, $extractStrategy->extract($model));
 
         $model = new Fixture2();
@@ -37,9 +37,9 @@ class ExtractPublicCallGettersStrategyTest extends TestCase
     }
 
     /**
-     * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
+     * Стратегия переноса данных из объекта в массив с вызовом геттеров
      */
-    public function testExtractHuminize(): void
+    public function testExtractHumanize(): void
     {
         $model = new Fixture1();
         $data = [
@@ -47,9 +47,9 @@ class ExtractPublicCallGettersStrategyTest extends TestCase
             'property_bar' => 1,
             'property_baz' => true,
         ];
-        $hydrateStrategy = new HydrateStrategy(new Humanize());
+        $hydrateStrategy = new Hydrate(new Humanize());
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractPublicCallGettersStrategy(new Humanize());
+        $extractStrategy = new ExtractCallGetters(new Humanize());
         $this->assertEquals($data, $extractStrategy->extract($model));
 
         $model = new Fixture2();

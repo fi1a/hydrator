@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\HydrateStrategies;
+namespace Fi1a\Hydrator\Hydrates;
 
 /**
  * Стратегия переноса данных из массива в объект
  */
-interface HydrateStrategyInterface
+interface HydrateInterface
 {
     /**
      * Стратегия переноса данных из массива в объект
