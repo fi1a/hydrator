@@ -66,7 +66,7 @@ $model->propertyBar; // 'value'
 
 ```php
 use Fi1a\Hydrator\Hydrator;
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
+use Fi1a\Hydrator\Hydrates\Hydrate;
 
 class Foo {
     /**
@@ -98,9 +98,9 @@ $hydrator->hydrateModel([
 $model->propertyBar; // 'value'
 ```
 
-### Стратегия Fi1a\Hydrator\HydrateStrategies\HydrateStrategy
+### Поведение Fi1a\Hydrator\Hydrates\Hydrate
 
-Стратегия для переноса данных из массива в объект без вызова методов сеттеров объекта. Является стратегией по умолчанию.
+Служит для переноса данных из массива в объект без вызова методов сеттеров объекта. Является поведением по умолчанию.
 
 ```php
 use Fi1a\Hydrator\Hydrator;
@@ -136,13 +136,13 @@ $model = $hydrator->hydrate([
 $model->propertyBar; // 'value'
 ```
 
-### Стратегия Fi1a\Hydrator\HydrateStrategies\HydrateCallSettersStrategy
+### Поведение Fi1a\Hydrator\Hydrates\HydrateCallSetters
 
-Стратегия для переноса данных из массива в объект с вызовом сеттеров.
+Служит для переноса данных из массива в объект с вызовом сеттеров.
 
 ```php
 use Fi1a\Hydrator\Hydrator;
-use Fi1a\Hydrator\HydrateStrategies\HydrateCallSettersStrategy;
+use Fi1a\Hydrator\Hydrates\HydrateCallSetters;
 
 class Foo {
     public $propertyBar;
@@ -163,7 +163,7 @@ class Foo {
 }
 
 
-$hydrator = new Hydrator(new HydrateCallSettersStrategy());
+$hydrator = new Hydrator(new HydrateCallSetters());
 
 /**
  * @var Foo $model
@@ -177,13 +177,13 @@ $model = $hydrator->hydrate([
 $model->getPropertyBaz(); // 2
 ```
 
-### Стратегия Fi1a\Hydrator\HydrateStrategies\HydratePublicCallSettersStrategy
+### Поведение Fi1a\Hydrator\Hydrates\HydratePublicCallSetters
 
-Стратегия для переноса данных из массива в объект с вызовом только публичных сеттеров.
+Служит для переноса данных из массива в объект с вызовом только публичных сеттеров.
 
 ```php
 use Fi1a\Hydrator\Hydrator;
-use Fi1a\Hydrator\HydrateStrategies\HydratePublicCallSettersStrategy;
+use Fi1a\Hydrator\Hydrates\HydratePublicCallSetters;
 
 class Foo {
     public $propertyBar;
@@ -204,7 +204,7 @@ class Foo {
 }
 
 
-$hydrator = new Hydrator(new HydratePublicCallSettersStrategy());
+$hydrator = new Hydrator(new HydratePublicCallSetters());
 
 /**
  * @var Foo $model
@@ -279,15 +279,15 @@ $hydrator = new Extractor();
 $data = $hydrator->extract($model, ['propertyBar', 'propertyBaz']); // ['propertyBar' => 'value', 'propertyBaz' => 1,]
 ```
 
-### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractPublicCallGettersStrategy
+### Поведение Fi1a\Hydrator\Extracts\ExtractPublicCallGetters
 
-Стратегия переноса данных из объекта в массив с вызовом публичных геттеров.
+Осуществляет перенос данных из объекта в массив с вызовом публичных геттеров.
 Если ключи массива в метод `Fi1a\Hydrator\Extractor::extract` не переданы, будут получены все публичные свойства объекта
-и свойства, имеющие публичные геттеры, иначе будут получены только переданные свойства. Является стратегией по умолчанию.
+и свойства, имеющие публичные геттеры, иначе будут получены только переданные свойства. Является поведением по умолчанию.
 
 ```php
 use Fi1a\Hydrator\Extractor;
-use Fi1a\Hydrator\ExtractStrategies\ExtractPublicCallGettersStrategy;
+use Fi1a\Hydrator\Extracts\ExtractPublicCallGetters;
 
 class Foo {
     /**
@@ -313,20 +313,20 @@ class Foo {
 
 $model = new Foo();
 
-$hydrator = new Extractor(new ExtractPublicCallGettersStrategy());
+$hydrator = new Extractor(new ExtractPublicCallGetters());
 
 $data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' => 1,]
 ```
 
-### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractCallGettersStrategy
+### Поведение Fi1a\Hydrator\Extracts\ExtractCallGetters
 
-Стратегия переноса данных из объекта в массив с вызовом геттеров.
+Осуществляет перенос данных из объекта в массив с вызовом геттеров.
 Если ключи массива в метод `Fi1a\Hydrator\Extractor::extract` не переданы, будут получены все свойства объекта и вызваны их геттеры,
 иначе будут получены только переданные свойства.
 
 ```php
 use Fi1a\Hydrator\Extractor;
-use Fi1a\Hydrator\ExtractStrategies\ExtractCallGettersStrategy;
+use Fi1a\Hydrator\Extracts\ExtractCallGetters;
 
 class Foo {
     /**
@@ -352,20 +352,20 @@ class Foo {
 
 $model = new Foo();
 
-$hydrator = new Extractor(new ExtractCallGettersStrategy());
+$hydrator = new Extractor(new ExtractCallGetters());
 
 $data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' => 1, 'propertyQux' => true]
 ```
 
-### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractPublicStrategy
+### Поведение Fi1a\Hydrator\Extracts\ExtractPublic
 
-Стратегия переноса публичных свойств из объекта в массив.
+Осуществляет перенос публичных свойств из объекта в массив.
 Если ключи массива в метод `Fi1a\Hydrator\Extractor::extract` не переданы, будут получены все публичные свойства объекта,
 иначе будут получены только переданные свойства.
 
 ```php
 use Fi1a\Hydrator\Extractor;
-use Fi1a\Hydrator\ExtractStrategies\ExtractPublicStrategy;
+use Fi1a\Hydrator\Extracts\ExtractPublic;
 
 class Foo {
     /**
@@ -391,20 +391,20 @@ class Foo {
 
 $model = new Foo();
 
-$hydrator = new Extractor(new ExtractPublicStrategy());
+$hydrator = new Extractor(new ExtractPublic());
 
 $data = $hydrator->extract($model); // ['propertyBar' => 'value',]
 ```
 
-### Стратегия Fi1a\Hydrator\ExtractStrategies\ExtractStrategy
+### Поведение Fi1a\Hydrator\Extracts\Extract
 
-Стратегия переноса данных из объекта в массив.
+Осуществляет перенос данных из объекта в массив.
 Если ключи массива в метод `Fi1a\Hydrator\Extractor::extract` не переданы, будут получены все свойства объекта,
 иначе будут получены только переданные свойства.
 
 ```php
 use Fi1a\Hydrator\Extractor;
-use Fi1a\Hydrator\ExtractStrategies\ExtractStrategy;
+use Fi1a\Hydrator\Extracts\Extract;
 
 class Foo {
     /**
@@ -430,7 +430,7 @@ class Foo {
 
 $model = new Foo();
 
-$hydrator = new Extractor(new ExtractStrategy());
+$hydrator = new Extractor(new Extract());
 
 $data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' => 1, 'propertyQux' => true]
 ```
@@ -449,7 +449,7 @@ $data = $hydrator->extract($model); // ['propertyBar' => 'value', 'propertyBaz' 
 
 ```php
 use Fi1a\Hydrator\Hydrator;
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
+use Fi1a\Hydrator\Hydrates\Hydrate;
 use Fi1a\Hydrator\KeyName\Humanize;
 
 class Foo {
@@ -469,7 +469,7 @@ class Foo {
     private $propertyQux;
 }
 
-$hydrator = new Hydrator(new HydrateStrategy(new Humanize()));
+$hydrator = new Hydrator(new Hydrate(new Humanize()));
 
 $model = new Foo();
 
@@ -485,7 +485,7 @@ $model->propertyBar; // 'value'
 
 ```php
 use Fi1a\Hydrator\Extractor;
-use Fi1a\Hydrator\ExtractStrategies\ExtractStrategy;
+use Fi1a\Hydrator\Extracts\Extract;
 use Fi1a\Hydrator\KeyName\Humanize;
 
 class Foo {
@@ -512,7 +512,7 @@ class Foo {
 
 $model = new Foo();
 
-$hydrator = new Extractor(new ExtractStrategy(new Humanize()));
+$hydrator = new Extractor(new Extract(new Humanize()));
 
 $data = $hydrator->extract($model); // ['property_bar' => 'value', 'property_baz' => 1, 'property_qux' => true]
 ```

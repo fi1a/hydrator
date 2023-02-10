@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\Hydrator;
 
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategyInterface;
+use Fi1a\Hydrator\Hydrates\HydrateInterface;
 
 /**
  * Перенос данных из массива в объект
@@ -14,7 +14,7 @@ interface HydratorInterface
     /**
      * Конструктор
      */
-    public function __construct(?HydrateStrategyInterface $hydrateStrategy = null);
+    public function __construct(?HydrateInterface $hydrateStrategy = null);
 
     /**
      * Перенос данных из массива в создаваемый объект

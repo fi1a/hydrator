@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\HydrateStrategies;
+namespace Fi1a\Unit\Hydrator\Hydrates;
 
-use Fi1a\Hydrator\HydrateStrategies\HydrateCallSettersStrategy;
+use Fi1a\Hydrator\Hydrates\HydrateCallSetters;
 use Fi1a\Hydrator\KeyName\Humanize;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Стратегия для переноса данных из массива в объект с вызовом сеттеров
  */
-class HydrateCallSettersStrategyTest extends TestCase
+class HydrateCallSettersTest extends TestCase
 {
     /**
      * Стратегия для переноса данных из массива в объект с вызовом сеттеров
@@ -25,7 +25,7 @@ class HydrateCallSettersStrategyTest extends TestCase
             'propertyBar' => 1,
             'propertyBaz' => true,
         ];
-        $strategy = new HydrateCallSettersStrategy();
+        $strategy = new HydrateCallSetters();
         $strategy->hydrate($data, $model);
         $this->assertEquals('string_setter', $model->propertyFoo);
         $this->assertEquals(2, $model->getPropertyBar());
@@ -43,7 +43,7 @@ class HydrateCallSettersStrategyTest extends TestCase
             'property_bar' => 1,
             'property_baz' => true,
         ];
-        $strategy = new HydrateCallSettersStrategy(new Humanize());
+        $strategy = new HydrateCallSetters(new Humanize());
         $strategy->hydrate($data, $model);
         $this->assertEquals('string_setter', $model->propertyFoo);
         $this->assertEquals(2, $model->getPropertyBar());

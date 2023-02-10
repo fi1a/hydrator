@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\ExtractStrategies;
+namespace Fi1a\Unit\Hydrator\Extracts;
 
-use Fi1a\Hydrator\ExtractStrategies\ExtractStrategy;
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
+use Fi1a\Hydrator\Extracts\ExtractPublicCallGetters;
+use Fi1a\Hydrator\Hydrates\Hydrate;
 use Fi1a\Hydrator\KeyName\Humanize;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture2;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Стратегия переноса данных из объекта в массив
+ * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
  */
-class ExtractStrategyTest extends TestCase
+class ExtractPublicCallGettersTest extends TestCase
 {
     /**
-     * Стратегия переноса данных из объекта в массив
+     * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
      */
     public function testExtract(): void
     {
@@ -27,9 +27,9 @@ class ExtractStrategyTest extends TestCase
             'propertyBar' => 1,
             'propertyBaz' => true,
         ];
-        $hydrateStrategy = new HydrateStrategy();
+        $hydrateStrategy = new Hydrate();
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractStrategy();
+        $extractStrategy = new ExtractPublicCallGetters();
         $this->assertEquals($data, $extractStrategy->extract($model));
 
         $model = new Fixture2();
@@ -37,9 +37,9 @@ class ExtractStrategyTest extends TestCase
     }
 
     /**
-     * Стратегия переноса данных из объекта в массив
+     * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
      */
-    public function testExtractHumanize(): void
+    public function testExtractHuminize(): void
     {
         $model = new Fixture1();
         $data = [
@@ -47,9 +47,9 @@ class ExtractStrategyTest extends TestCase
             'property_bar' => 1,
             'property_baz' => true,
         ];
-        $hydrateStrategy = new HydrateStrategy(new Humanize());
+        $hydrateStrategy = new Hydrate(new Humanize());
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractStrategy(new Humanize());
+        $extractStrategy = new ExtractPublicCallGetters(new Humanize());
         $this->assertEquals($data, $extractStrategy->extract($model));
 
         $model = new Fixture2();
