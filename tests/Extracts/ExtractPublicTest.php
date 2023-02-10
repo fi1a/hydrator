@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\Hydrator\ExtractStrategies;
+namespace Fi1a\Unit\Hydrator\Extracts;
 
-use Fi1a\Hydrator\ExtractStrategies\ExtractPublicStrategy;
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
+use Fi1a\Hydrator\Extracts\ExtractPublic;
+use Fi1a\Hydrator\Hydrates\Hydrate;
 use Fi1a\Hydrator\KeyName\Humanize;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture1;
 use Fi1a\Unit\Hydrator\Fixtures\Fixture2;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Стратегия переноса публичных свойств из объекта в массив
  */
-class ExtractPublicStrategyTest extends TestCase
+class ExtractPublicTest extends TestCase
 {
     /**
      * Стратегия переноса публичных свойств из объекта в массив
@@ -27,9 +27,9 @@ class ExtractPublicStrategyTest extends TestCase
             'propertyBar' => 1,
             'propertyBaz' => true,
         ];
-        $hydrateStrategy = new HydrateStrategy();
+        $hydrateStrategy = new Hydrate();
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractPublicStrategy();
+        $extractStrategy = new ExtractPublic();
         $this->assertEquals(['propertyFoo' => 'string',], $extractStrategy->extract($model));
 
         $model = new Fixture2();
@@ -47,9 +47,9 @@ class ExtractPublicStrategyTest extends TestCase
             'property_bar' => 1,
             'property_baz' => true,
         ];
-        $hydrateStrategy = new HydrateStrategy(new Humanize());
+        $hydrateStrategy = new Hydrate(new Humanize());
         $hydrateStrategy->hydrate($data, $model);
-        $extractStrategy = new ExtractPublicStrategy(new Humanize());
+        $extractStrategy = new ExtractPublic(new Humanize());
         $this->assertEquals(['property_foo' => 'string',], $extractStrategy->extract($model));
 
         $model = new Fixture2();

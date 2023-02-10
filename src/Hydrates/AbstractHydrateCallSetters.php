@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\HydrateStrategies;
+namespace Fi1a\Hydrator\Hydrates;
 
 use Closure;
 use Fi1a\Hydrator\KeyName\Camelize;
@@ -12,7 +12,7 @@ use Fi1a\Hydrator\Method;
 /**
  * Абстрактная стратегия для переноса данных из массива в объект с вызовом сеттеров
  */
-abstract class AbstractHydrateCallSettersStrategy implements HydrateStrategyInterface
+abstract class AbstractHydrateCallSetters implements HydrateInterface
 {
     /**
      * @var Closure

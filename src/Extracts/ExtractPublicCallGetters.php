@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\ExtractStrategies;
+namespace Fi1a\Hydrator\Extracts;
 
 use Fi1a\Hydrator\Method;
 use ReflectionClass;
@@ -10,7 +10,7 @@ use ReflectionClass;
 /**
  * Стратегия переноса данных из объекта в массив с вызовом публичных геттеров
  */
-class ExtractPublicCallGettersStrategy extends AbstractExtractCallGettersStrategy
+class ExtractPublicCallGetters extends AbstractExtractCallGetters
 {
     /**
      * @inheritDoc

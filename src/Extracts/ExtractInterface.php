@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Hydrator\ExtractStrategies;
+namespace Fi1a\Hydrator\Extracts;
 
 /**
  * Стратегия переноса данных из объекта в массив
  */
-interface ExtractStrategyInterface
+interface ExtractInterface
 {
     /**
      * Стратегия переноса данных из объекта в массив

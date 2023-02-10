@@ -32,7 +32,10 @@
   "autoload": {
     "psr-4": {
       "Fi1a\\Hydrator\\": "src"
-    }
+    },
+    "files": [
+      "src/compatible.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

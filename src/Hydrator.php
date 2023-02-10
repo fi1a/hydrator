@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fi1a\Hydrator;
 
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategy;
-use Fi1a\Hydrator\HydrateStrategies\HydrateStrategyInterface;
+use Fi1a\Hydrator\Hydrates\Hydrate;
+use Fi1a\Hydrator\Hydrates\HydrateInterface;
 use ReflectionClass;
 use ReflectionException;
 
@@ -20,17 +20,17 @@ class Hydrator implements HydratorInterface
     private $models = [];
 
     /**
-     * @var HydrateStrategyInterface
+     * @var HydrateInterface
      */
     private $hydrateStrategy;
 
     /**
      * @inheritDoc
      */
-    public function __construct(?HydrateStrategyInterface $hydrateStrategy = null)
+    public function __construct(?HydrateInterface $hydrateStrategy = null)
     {
         if (!$hydrateStrategy) {
-            $hydrateStrategy = new HydrateStrategy();
+            $hydrateStrategy = new Hydrate();
         }
         $this->hydrateStrategy = $hydrateStrategy;
     }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fi1a\Hydrator;
 
-use Fi1a\Hydrator\ExtractStrategies\ExtractPublicCallGettersStrategy;
-use Fi1a\Hydrator\ExtractStrategies\ExtractStrategyInterface;
+use Fi1a\Hydrator\Extracts\ExtractInterface;
+use Fi1a\Hydrator\Extracts\ExtractPublicCallGetters;
 
 /**
  * Перенос данных из объекта в массив
@@ -13,14 +13,14 @@ use Fi1a\Hydrator\ExtractStrategies\ExtractStrategyInterface;
 class Extractor implements ExtractorInterface
 {
     /**
-     * @var ExtractStrategyInterface
+     * @var ExtractInterface
      */
     private $extractStrategy;
 
-    public function __construct(?ExtractStrategyInterface $extractStrategy = null)
+    public function __construct(?ExtractInterface $extractStrategy = null)
     {
         if (!$extractStrategy) {
-            $extractStrategy = new ExtractPublicCallGettersStrategy();
+            $extractStrategy = new ExtractPublicCallGetters();
         }
         $this->extractStrategy = $extractStrategy;
     }
